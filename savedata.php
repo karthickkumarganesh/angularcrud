@@ -33,7 +33,7 @@ function fetchData(){
     //$result=mysql_fetch_assoc($select);
     $i=0;
     while($row=mysql_fetch_assoc($select)){
-        $result[$i]=$row;
+        $result[$row['id']]=row;
         $i++;
     }
     print_r(json_encode($result));
