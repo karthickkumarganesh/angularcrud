@@ -6,8 +6,8 @@ $select=mysql_query("select * from users");
 //$result=mysql_fetch_assoc($select);
 $i=0;
 while($row=mysql_fetch_assoc($select)){
-    $result[$row['id']]=$row;
+    $results[]=$row;
     $i++;
 }
-print_r(json_encode($result));
+print_r(json_encode($results));
 

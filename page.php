@@ -1,5 +1,6 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/lodash.js"></script>
 <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
 <link type="text/css" rel="stylesheet" href="css/bootstrap-responsive.css">
 
@@ -25,7 +26,7 @@
           <td>{{user.age}}</td>
           <td ng-show="user.status">Active</td>
           <td ng-hide="user.status">In-Active</td>
-          <td><button class="btn btn-info" ng-click=editUser(user.id)>Edit</button>
+          <td><button class="btn btn-info" ng-click=editUser($index)>Edit</button>
             <button class="btn btn-danger" ng-click="deleteUser(user.id)">Delete</button></td>
         </tr>
       </tbody>
@@ -110,16 +111,20 @@
                 if($scope.userdetail.id==0){
 
                     if($scope.users=="null"){
-                        console.log(data);
-                        $scope.users=data;
+                       
+                        $scope.users=[];
+                        $scope.users.push(data);
                     } else{
-                        console.log(data);
-                        $scope.users=$scope.users.concat(angular.toJson([data]));
-                        console.log( $scope.users);
+                        
+                        $scope.users.push(data);
+                        
                     }
 
                 }else{
-					$scope.users[$scope.userdetail.id]=data;
+                     //console.log(data);
+                    ind= _.findIndex($scope.users,{id:data.id}) ;
+                   
+					$scope.users[ind]=data;
                 }
 
 
@@ -148,14 +153,14 @@
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function(data){
 
                 if(data==1){
-                    //$index= $scope.users[userid].indexOf;
+                    index= _.findIndex($scope.users,{id:userid});
                     // $scope.users.splice(userid,1);
-                   $scope.users= $scope.users.splice($scope.users[userid].indexOf(),1);
+                    $scope.users.splice(index,1);
 
                     console.log($scope.users);
                 }
 
-            })
+            });
         }
 
     });
